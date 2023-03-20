@@ -6,22 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Password Generator</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            src="https://kit.fontawesome.com/57928373af.js"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
         <div
             class="flex justify-center items-center bg-teal-100 h-screen text-white"
         >
             <div
-                class="w-auto h-auto bg-teal-800 rounded-xl flex flex-col justify-center"
+                class="h-auto bg-teal-800 rounded-xl flex flex-col justify-center items-center"
             >
                 <h1 class="text-center text-white py-4 px-8 text-3xl">
                     Password Generator
                 </h1>
                 <div
-                    class="w-10/12 h-auto bg-teal-900 rounded-lg mx-auto flex justify-start items-center p-4 whitespace-nowrap overflow-scroll"
+                    class="w-10/12 h-auto max-w-xs bg-teal-900 rounded-lg flex justify-start items-center p-2 whitespace-nowrap"
                 >
-                    {% if generated_password %} {{generated_password}} {% else
-                    %} <span> </span>{% endif %}
+                    <span id="copyText" class="w-10/12 flex items-center shrink overflow-x-auto">{% if generated_password %}{{generated_password}}{% endif %}</span> 
+                    <i class="fa-solid fa-copy w-2/12 text-center hover:cursor-pointer active:scale-90" onclick="copyContent()"></i>
                 </div>
                 <form
                     action="/submit"
@@ -76,5 +80,18 @@
                 </form>
             </div>
         </div>
+        <script>
+            let text = document.getElementById('copyText').innerHTML;
+            const copyContent = async () => {
+              try {
+                console.log('hit try block')
+                await navigator.clipboard.writeText(text);
+                alert('Content copied to clipboard');
+              } catch (err) {
+                console.log('hit error block')
+                console.error('Failed to copy: ', err);
+              }
+            }
+          </script>
     </body>
 </html>
